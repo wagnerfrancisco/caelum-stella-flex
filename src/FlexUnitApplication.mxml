@@ -10,10 +10,12 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.caelum.stella.validation.ie.IEAcreValidatorTest;
+			import br.com.caelum.stella.format.LeftSideZerosFormatterTest;
 			
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
+				testsToRun.push(br.com.caelum.stella.format.LeftSideZerosFormatterTest);
 				testsToRun.push(br.com.caelum.stella.validation.ie.IEAcreValidatorTest);
 				return testsToRun;
 			}

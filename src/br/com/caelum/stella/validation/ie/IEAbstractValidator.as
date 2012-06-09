@@ -2,7 +2,6 @@ package br.com.caelum.stella.validation.ie
 {
 	import flash.events.Event;
 	
-	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 
@@ -49,13 +48,17 @@ package br.com.caelum.stella.validation.ie
 		
 		protected function checkForCorrectFormat(ie:String, errors:Array):String {
 			var unformattedIE:String;
+			var pattern:RegExp;
+			
 			if (isFormatted) {
-				if (!ie.match(getFormattedPattern())) {
+				pattern = getFormattedPattern();
+				if (!pattern.test(ie)) {
 					errors.push(new ValidationResult(true, null, IEErrors.INVALID_FORMAT, 'invalid_format'));
 				}
 				unformattedIE = ie.replace(/\D/g, '');
 			} else {
-				if (!ie.match(getUnformattedPattern())) {
+				pattern = getUnformattedPattern();
+				if (!pattern.test(ie)) {
 					errors.push(new ValidationResult(true, null, IEErrors.INVALID_DIGITS, 'invalid_digits'));
 				}
 				unformattedIE = ie;
