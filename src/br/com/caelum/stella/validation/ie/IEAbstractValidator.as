@@ -15,10 +15,9 @@ package br.com.caelum.stella.validation.ie
 		private var _invalidMunicipalityErrorMessage:String = 'Municipalidade inválida';
 		private var _undefinedStateErrorMessage:String = 'Estado indefinido';
 		
-		public function IEAbstractValidator(isFormatted:Boolean = true) {
+		public function IEAbstractValidator(isFormatted:Boolean) {
 			super();
-			this._isFormatted = isFormatted;
-			super.requiredFieldError
+			this._isFormatted = isFormatted;		
 		}
 		
 		override protected function doValidation(value:Object):Array {
@@ -35,7 +34,7 @@ package br.com.caelum.stella.validation.ie
 			return results;
 		}
 		
-		private function getInvalidValues(ie:String):Array {
+		protected function getInvalidValues(ie:String):Array {
 			var errors:Array = [];
 			var unformattedIE:String = checkForCorrectFormat(ie, errors);
 			if (errors.length === 0) {

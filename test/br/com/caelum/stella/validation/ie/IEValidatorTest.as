@@ -68,7 +68,7 @@ package br.com.caelum.stella.validation.ie
 			
 			var resultEvent:ValidationResultEvent = validator.validate(_wrongCheckDigitUnformattedIE);
 			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
-			
+
 			var errors:Array = errorResults(resultEvent);
 			assertEquals(1, errors.length);
 			assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);
@@ -80,9 +80,8 @@ package br.com.caelum.stella.validation.ie
 			var resultEvent:ValidationResultEvent;
 			
 			for each (var validValue:String in _validFormattedValues) {
-				trace('validValue', validValue);
 				resultEvent = validator.validate(validValue);
-				assertEquals(ValidationResultEvent.VALID, resultEvent.type);				
+				assertEquals(ValidationResultEvent.VALID, resultEvent.type);
 			}
 		}
 		
@@ -115,7 +114,7 @@ package br.com.caelum.stella.validation.ie
 			assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);
 		}
 		
-		private function errorResults(event:ValidationResultEvent):Array {
+		protected function errorResults(event:ValidationResultEvent):Array {
 			var errors:Array = [];
 			for each (var validationResult:ValidationResult in event.results) {
 				if (validationResult.isError) {
