@@ -17,6 +17,8 @@ package flexUnitTests
 	import br.com.caelum.stella.validation.ie.IEParaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEParaibaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEParanaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IEPernambucoAntigaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IEPernambucoNovaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEPiauiValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioDeJaneiroValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioGrandeDoNorteValidatorTest;
@@ -45,6 +47,8 @@ package flexUnitTests
 		public var ieParaibaValidatorTest:IEParaibaValidatorTest;
 		public var ieParanaValidatorTest:IEParanaValidatorTest;
 		public var ieParaValidatorTest:IEParaValidatorTest;
+		public var iePernambucoAntigaValidatorTest:IEPernambucoAntigaValidatorTest;
+		public var iePernambucoNovaValidatorTest:IEPernambucoNovaValidatorTest;
 		
 		public var iePiauiValidatorTest:IEPiauiValidatorTest;
 		public var ieRioDeJaneiroValidatorTest:IERioDeJaneiroValidatorTest;
