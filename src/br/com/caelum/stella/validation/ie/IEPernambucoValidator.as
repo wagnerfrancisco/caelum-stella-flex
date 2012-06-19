@@ -13,6 +13,7 @@ package br.com.caelum.stella.validation.ie
 		public function IEPernambucoValidator(isFormatted:Boolean = true) {
 			var validatorClasses:Array = [IEPernambucoNovaValidator, IEPernambucoAntigaValidator];
 			logicOrComposedValidator = new LogicOrComposedValidator(isFormatted, validatorClasses);
+			this.required = false;
 		}
 		
 		override public function validate(value:Object=null, suppressEvents:Boolean=false):ValidationResultEvent {

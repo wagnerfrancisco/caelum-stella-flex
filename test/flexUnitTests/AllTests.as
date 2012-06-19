@@ -18,9 +18,9 @@ package flexUnitTests
 	import br.com.caelum.stella.validation.ie.IEParaibaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEParanaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEPernambucoAntigaValidatorTest;
-	import br.com.caelum.stella.validation.ie.IEPernambucoComposedAntigaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IEPernambucoNovaValidatorTest;
-	import br.com.caelum.stella.validation.ie.IEPernambucoValidatorTest;
+	import br.com.caelum.stella.validation.ie.IEPernambucoValidatorAntigoFormatoTest;
+	import br.com.caelum.stella.validation.ie.IEPernambucoValidatorNovoFormatoTest;
 	import br.com.caelum.stella.validation.ie.IEPiauiValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioDeJaneiroValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioGrandeDoNorteValidatorTest;
@@ -32,7 +32,7 @@ package flexUnitTests
 	[Suite]
 	[RunWith("org.flexunit.runners.Suite")]
 	public class AllTests {
-		/*public var leftSideZerosFormatterTest:LeftSideZerosFormatterTest;
+		public var leftSideZerosFormatterTest:LeftSideZerosFormatterTest;
 		public var ieAcreValidatorTest:IEAcreValidatorTest;
 		public var ieAlagoasValidatorTest:IEAlagoasValidatorTest;
 		public var ieAmapaValidatorTest:IEAmapaValidatorTest;
@@ -50,10 +50,10 @@ package flexUnitTests
 		public var ieParanaValidatorTest:IEParanaValidatorTest;
 		public var ieParaValidatorTest:IEParaValidatorTest;
 		public var iePernambucoAntigaValidatorTest:IEPernambucoAntigaValidatorTest;
-		public var iePernambucoNovaValidatorTest:IEPernambucoNovaValidatorTest;*/
-		public var iePernambucoComposedAntigaValidatorTest:IEPernambucoComposedAntigaValidatorTest;
-		
-		/*public var iePiauiValidatorTest:IEPiauiValidatorTest;
+		public var iePernambucoNovaValidatorTest:IEPernambucoNovaValidatorTest;
+		public var iePernambucoValidatorAntigoFormatoTest:IEPernambucoValidatorAntigoFormatoTest;
+		public var iePernambucoValidatorNovoFormatoTest:IEPernambucoValidatorNovoFormatoTest;		
+		public var iePiauiValidatorTest:IEPiauiValidatorTest;
 		public var ieRioDeJaneiroValidatorTest:IERioDeJaneiroValidatorTest;
 		public var ieRioGrandeDoNorteValidatorTest:IERioGrandeDoNorteValidatorTest;
 		public var ieRioGrandeDoSulValidatorTest:IERioGrandeDoSulValidatorTest;
@@ -61,6 +61,6 @@ package flexUnitTests
 		public var ieRoraimaValidatorTest:IERoraimaValidatorTest;
 		public var ieSantaCatarinaValidatorTest:IESantaCatarinaValidatorTest;
 		
-		public var ieSergipeValidatorTest:IESergipeValidatorTest;*/
+		public var ieSergipeValidatorTest:IESergipeValidatorTest;
 	}
 }

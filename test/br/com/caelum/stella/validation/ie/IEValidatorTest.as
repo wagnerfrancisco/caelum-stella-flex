@@ -4,7 +4,6 @@ package br.com.caelum.stella.validation.ie
 	
 	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 	
 	import org.flexunit.asserts.assertEquals;
 
@@ -89,7 +88,6 @@ package br.com.caelum.stella.validation.ie
 		[Test]
 		public function shouldValidateNullIE():void {
 			var validator:StellaValidator = getValidator(false);
-			Validator(validator).required = false;
 			
 			var resultEvent:ValidationResultEvent = validator.validate(null);
 			assertEquals(ValidationResultEvent.VALID, resultEvent.type);

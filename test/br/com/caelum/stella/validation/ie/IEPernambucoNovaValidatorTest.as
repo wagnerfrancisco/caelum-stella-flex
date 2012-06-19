@@ -10,7 +10,7 @@ package br.com.caelum.stella.validation.ie
 		* 0321418-40 032141840
 		*/
 		private static const wrongCheckDigitUnformattedString:String = '032141849';		
-		private static const validUnformattedString:String = '032141840';		
+		protected static const validUnformattedString:String = '032141840';		
 		private static const validFormattedString:String = '0321418-40';		
 		// TODO Adicionar mais IE validas
 		private static const validValues:Array = [validFormattedString];

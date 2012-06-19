@@ -7,9 +7,13 @@ package br.com.caelum.stella.validation.ie
 	
 	import org.flexunit.asserts.assertEquals;
 
-	public class IEPernambucoComposedAntigaValidatorTest extends IEPernambucoAntigaValidatorTest {
+	/*
+	* Teste de valores de IE novos contra IEPernambucoValidator
+	* Verificar IEPernambucoValidatorAntigoFormatoTest para valores antigos.
+	*/
+	public class IEPernambucoValidatorNovoFormatoTest extends IEPernambucoNovaValidatorTest {
 		
-		public function IEPernambucoComposedAntigaValidatorTest() {
+		public function IEPernambucoValidatorNovoFormatoTest() {
 		}
 		
 		override public function shouldNotValidateIEWithLessDigitsThanAllowed():void {

@@ -19,7 +19,8 @@ package br.com.caelum.stella.validation.ie
 		
 		public function IEAbstractValidator(isFormatted:Boolean) {
 			super();
-			this._isFormatted = isFormatted;		
+			this._isFormatted = isFormatted;
+			this.required = false;
 		}
 		
 		override protected function doValidation(value:Object):Array {

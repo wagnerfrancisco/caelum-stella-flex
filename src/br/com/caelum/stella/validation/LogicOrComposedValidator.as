@@ -13,6 +13,8 @@ package br.com.caelum.stella.validation
 		public function LogicOrComposedValidator(isFormatted:Boolean,
 			validatorClasses:Array) {
 			this.validators = [];
+			this.required = false;
+			
 			for each (var clazz:Class in validatorClasses) {
 				this.validators.push(new clazz(isFormatted));
 			}
