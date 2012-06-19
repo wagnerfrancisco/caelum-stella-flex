@@ -1,11 +1,12 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.validation.StellaValidator;
+	
 	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 	
 	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.fail;
 
 	public class IEValidatorTest {
 		
@@ -26,7 +27,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidCharacter():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			
 			var resultEvent:ValidationResultEvent = validator.validate(_validUnformattedIE.replace(/./, '&'));
 			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
@@ -38,7 +39,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithLessDigitsThanAllowed():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			
 			var resultEvent:ValidationResultEvent = validator.validate(_validUnformattedIE.replace(/./, ''));
 			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
@@ -51,7 +52,7 @@ package br.com.caelum.stella.validation.ie
 		// IEMatoGrosso e IERioGrandeDoNorte sobreescrevem
 		[Test]
 		public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			
 			var value:String = _validUnformattedIE + '5';
 			var resultEvent:ValidationResultEvent = validator.validate(value);			
@@ -64,7 +65,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEsWithWrongCheckDigit():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			
 			var resultEvent:ValidationResultEvent = validator.validate(_wrongCheckDigitUnformattedIE);
 			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
@@ -76,7 +77,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldValidateValidIE():void {
-			var validator:Validator = getValidator(true);
+			var validator:StellaValidator = getValidator(true);
 			var resultEvent:ValidationResultEvent;
 			
 			for each (var validValue:String in _validFormattedValues) {
@@ -87,8 +88,8 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldValidateNullIE():void {
-			var validator:Validator = getValidator(false);
-			validator.required = false;
+			var validator:StellaValidator = getValidator(false);
+			Validator(validator).required = false;
 			
 			var resultEvent:ValidationResultEvent = validator.validate(null);
 			assertEquals(ValidationResultEvent.VALID, resultEvent.type);
@@ -96,7 +97,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateValidUnformattedIE():void {
-			var validator:Validator = getValidator(true);
+			var validator:StellaValidator = getValidator(true);
 			
 			var value:String = _validFormattedIE.replace('-', ':');
 			if (value === _validFormattedIE) {
@@ -124,7 +125,7 @@ package br.com.caelum.stella.validation.ie
 			return errors;
 		}
 		
-		protected function getValidator(isFormatted:Boolean):Validator {
+		protected function getValidator(isFormatted:Boolean):StellaValidator {
 			throw new Error('override IEValidatorTest.getValidator');
 		}
 	}

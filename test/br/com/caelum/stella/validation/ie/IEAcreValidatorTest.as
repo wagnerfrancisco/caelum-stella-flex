@@ -1,6 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
-	import mx.validators.Validator;
+	import br.com.caelum.stella.validation.StellaValidator;
 	
 	/*
 	* Formato Antigo : ???
@@ -33,7 +33,7 @@ package br.com.caelum.stella.validation.ie
 			
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):Validator {
+		override protected function getValidator(isFormatted:Boolean):StellaValidator {
 			return new IEAcreValidator(isFormatted);
 		}
 	}

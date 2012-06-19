@@ -1,11 +1,11 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.validation.StellaValidator;
+	
 	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 	
 	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.fail;
 
 	public class IERioGrandeDoNorteValidatorTest extends IEValidatorTest {
 		
@@ -26,13 +26,13 @@ package br.com.caelum.stella.validation.ie
 				validFormattedStringWithTenDigits, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):Validator {
+		override protected function getValidator(isFormatted:Boolean):StellaValidator {
 			return new IERioGrandeDoNorteValidator(isFormatted);
 		}
 		
 		[Test]
 		override public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			var value:String = validUnformattedStringWithTenDigits + "5";
 			
 			var resultEvent:ValidationResultEvent = validator.validate(value);

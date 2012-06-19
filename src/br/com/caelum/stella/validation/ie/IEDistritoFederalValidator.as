@@ -13,7 +13,7 @@ package br.com.caelum.stella.validation.ie
 	 * DE CRÍTICA DA INSCRIÇÃO ESTADUAL </a>
 	 * 
 	 */
-	public class IEDistritoFederalValidador extends IEAbstractValidator {
+	public class IEDistritoFederalValidator extends IEAbstractValidator {
 
 		private static const MOD:int = 11;	
 		
@@ -36,7 +36,7 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^(07)[.]([3-9]\d{2})[.](\d{3})[\/](\d{3})[-](\d{2})$/;		
 		public static const UNFORMATTED:RegExp = /^(07)([3-9]\d{2})(\d{3})(\d{3})(\d{2})$/;
 		
-		public function IEDistritoFederalValidador(isFormatted:Boolean) {
+		public function IEDistritoFederalValidator(isFormatted:Boolean) {
 			super(isFormatted);
 		}
 		

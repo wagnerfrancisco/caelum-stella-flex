@@ -4,7 +4,6 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 	
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 
 	public class IERioGrandeDoSulValidator extends IEAbstractValidator {
 		

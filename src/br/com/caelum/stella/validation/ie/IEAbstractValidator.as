@@ -1,11 +1,13 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.validation.StellaValidator;
+	
 	import flash.events.Event;
 	
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 
-	public class IEAbstractValidator extends Validator {
+	public class IEAbstractValidator extends Validator implements StellaValidator {
 		
 		private var _isFormatted:Boolean;
 		
@@ -117,6 +119,19 @@ package br.com.caelum.stella.validation.ie
 			_undefinedStateErrorMessage = value;
 		}
 
-		
+		public function isEligible(value:Object):Boolean {
+			var result:Boolean;
+			var pattern:RegExp;
+			
+			if (isFormatted) {
+				pattern = getFormattedPattern();
+				result = pattern.test(String(value));
+			} else {
+				pattern = getUnformattedPattern();
+				result = pattern.test(String(value));
+			}
+			
+			return result;
+		}
 	}
 }

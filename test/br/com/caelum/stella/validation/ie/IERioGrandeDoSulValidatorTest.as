@@ -1,12 +1,12 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.validation.StellaValidator;
+	
 	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 	
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.asserts.assertTrue;
-	import org.flexunit.asserts.fail;
 
 	public class IERioGrandeDoSulValidatorTest extends IEValidatorTest {
 		
@@ -21,7 +21,7 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidMunicipalityWithZeros():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			
 			// VALID IE = 224/3658792
 			var value1:String = '0003658791';			
@@ -45,7 +45,7 @@ package br.com.caelum.stella.validation.ie
 			assertTrue(errorCodes.indexOf(IEErrors.INVALID_MUNICIPALITY) != -1);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):Validator {
+		override protected function getValidator(isFormatted:Boolean):StellaValidator {
 			return new IERioGrandeDoSulValidator(isFormatted);
 		}
 

@@ -1,12 +1,11 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.validation.StellaValidator;
+	
 	import mx.events.ValidationResultEvent;
-	import mx.rpc.events.ResultEvent;
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 	
 	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.fail;
 
 	public class IEDistritoFederalValidatorTest extends IEValidatorTest {
 		
@@ -21,13 +20,13 @@ package br.com.caelum.stella.validation.ie
 			super(wrongFirstCheckDigitUnformattedString, validUnformattedString, validFormattedString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):Validator {
-			return new IEDistritoFederalValidador(isFormatted);
+		override protected function getValidator(isFormatted:Boolean):StellaValidator {
+			return new IEDistritoFederalValidator(isFormatted);
 		}
 		
 		[Test]
 		public function shouldNotValidateIEWithSecondCheckDigitWrong():void {
-			var validator:Validator = getValidator(false);
+			var validator:StellaValidator = getValidator(false);
 			var resultEvent:ValidationResultEvent = validator.validate(wrongSecondCheckDigitUnformattedString);
 			
 			var errors:Array = errorResults(resultEvent);
