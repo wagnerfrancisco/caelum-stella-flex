@@ -25,6 +25,10 @@ package flexUnitTests
 	import br.com.caelum.stella.validation.ie.IERioDeJaneiroValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioGrandeDoNorteValidatorTest;
 	import br.com.caelum.stella.validation.ie.IERioGrandeDoSulValidatorTest;
+	import br.com.caelum.stella.validation.ie.IERondoniaValidatorCasoDoisTest;
+	import br.com.caelum.stella.validation.ie.IERondoniaValidatorCasoUmTest;
+	import br.com.caelum.stella.validation.ie.IERondoniaValidatorFormatoDoisTest;
+	import br.com.caelum.stella.validation.ie.IERondoniaValidatorFormatoUmTest;
 	import br.com.caelum.stella.validation.ie.IERoraimaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IESantaCatarinaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IESergipeValidatorTest;
@@ -57,7 +61,10 @@ package flexUnitTests
 		public var ieRioDeJaneiroValidatorTest:IERioDeJaneiroValidatorTest;
 		public var ieRioGrandeDoNorteValidatorTest:IERioGrandeDoNorteValidatorTest;
 		public var ieRioGrandeDoSulValidatorTest:IERioGrandeDoSulValidatorTest;
-		
+		public var ieRondoniaValidatorCasoDoisTest:IERondoniaValidatorCasoDoisTest;
+		public var ieRondoniaValidatorCasoUmTest:IERondoniaValidatorCasoUmTest;
+		public var ieRondoniaValidatorFormatoDoisTest:IERondoniaValidatorFormatoDoisTest;
+		public var ieRondoniaValidatorFormatoUmTest:IERondoniaValidatorFormatoUmTest;		
 		public var ieRoraimaValidatorTest:IERoraimaValidatorTest;
 		public var ieSantaCatarinaValidatorTest:IESantaCatarinaValidatorTest;
 		
