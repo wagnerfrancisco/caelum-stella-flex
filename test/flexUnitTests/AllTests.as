@@ -31,7 +31,15 @@ package flexUnitTests
 	import br.com.caelum.stella.validation.ie.IERondoniaValidatorFormatoUmTest;
 	import br.com.caelum.stella.validation.ie.IERoraimaValidatorTest;
 	import br.com.caelum.stella.validation.ie.IESantaCatarinaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IESaoPauloComercioIndustriaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IESaoPauloProdutorRuralValidatorTest;
+	import br.com.caelum.stella.validation.ie.IESaoPauloValidatorComercioIndustriaTest;
+	import br.com.caelum.stella.validation.ie.IESaoPauloValidatorProdutorRuralTest;
 	import br.com.caelum.stella.validation.ie.IESergipeValidatorTest;
+	import br.com.caelum.stella.validation.ie.IETocantinsAntigaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IETocantinsNovaValidatorTest;
+	import br.com.caelum.stella.validation.ie.IETocantinsValidatorAntigaTest;
+	import br.com.caelum.stella.validation.ie.IETocantinsValidatorNovaTest;
 
 	[Suite]
 	[RunWith("org.flexunit.runners.Suite")]
@@ -67,7 +75,14 @@ package flexUnitTests
 		public var ieRondoniaValidatorFormatoUmTest:IERondoniaValidatorFormatoUmTest;		
 		public var ieRoraimaValidatorTest:IERoraimaValidatorTest;
 		public var ieSantaCatarinaValidatorTest:IESantaCatarinaValidatorTest;
-		
+		public var ieSaoPauloComercioIndustriaValidatorTest:IESaoPauloComercioIndustriaValidatorTest;
+		public var ieSaoPauloProdutorRuralValidatorTest:IESaoPauloProdutorRuralValidatorTest;
+		public var ieSaoPauloValidatorComercioIndustriaTest:IESaoPauloValidatorComercioIndustriaTest;
+		public var ieSaoPauloValidatorProdutorRuralTest:IESaoPauloValidatorProdutorRuralTest;				
 		public var ieSergipeValidatorTest:IESergipeValidatorTest;
+		public var ieTocantinsAntigaValidatorTest:IETocantinsAntigaValidatorTest;
+		public var ieTocantinsNovaValidatorTest:IETocantinsNovaValidatorTest;
+		public var ieTocantinsValidatorAntigaTest:IETocantinsValidatorAntigaTest;
+		public var ieTocantinsValidatorNovaTest:IETocantinsValidatorNovaTest;
 	}
 }
