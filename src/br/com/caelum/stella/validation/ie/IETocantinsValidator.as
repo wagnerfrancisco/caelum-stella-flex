@@ -5,7 +5,7 @@ package br.com.caelum.stella.validation.ie
 	
 	import mx.events.ValidationResultEvent;
 
-	public class IETocantinsValidator extends IEAbstractValidator {
+	public class IETocantinsValidator extends AbstractIEValidator {
 		
 		private var  logicOrComposedValidator:LogicOrComposedValidator;
 		

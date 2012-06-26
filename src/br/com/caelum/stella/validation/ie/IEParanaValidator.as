@@ -3,7 +3,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
-	public class IEParanaValidator extends IEAbstractValidator {
+	public class IEParanaValidator extends AbstractIEValidator {
 		
 		private static const DVX_MOD:int = 11;
 		private static const DVY_MOD:int = 11;

@@ -7,7 +7,7 @@ package br.com.caelum.stella.validation.ie
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 
-	public class IEAbstractValidator extends Validator implements StellaValidator {
+	public class AbstractIEValidator extends Validator implements StellaValidator {
 		
 		private var _isFormatted:Boolean;
 		
@@ -17,7 +17,7 @@ package br.com.caelum.stella.validation.ie
 		private var _invalidMunicipalityErrorMessage:String = 'Municipalidade inválida';
 		private var _undefinedStateErrorMessage:String = 'Estado indefinido';
 		
-		public function IEAbstractValidator(isFormatted:Boolean) {
+		public function AbstractIEValidator(isFormatted:Boolean) {
 			super();
 			this._isFormatted = isFormatted;
 			this.required = false;

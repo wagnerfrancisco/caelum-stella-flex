@@ -13,7 +13,7 @@ package br.com.caelum.stella.validation.ie
 	 * DE CRÍTICA DA INSCRIÇÃO ESTADUAL </a>
 	 * 
 	 */
-	public class IEBahiaValidator extends IEAbstractValidator {		
+	public class IEBahiaValidator extends AbstractIEValidator {		
 		
 		private static const rotinas:Array = [IERotinas.E, IERotinas.POS_IE];		
 		

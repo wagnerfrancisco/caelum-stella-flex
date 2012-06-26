@@ -13,7 +13,7 @@ package br.com.caelum.stella.validation.ie
 	 * DE CRÍTICA DA INSCRIÇÃO ESTADUAL </a>
 	 * 
 	 */
-	public class IEAmapaValidator extends IEAbstractValidator {
+	public class IEAmapaValidator extends AbstractIEValidator {
 		
 		private static const MOD:int = 11;
 		

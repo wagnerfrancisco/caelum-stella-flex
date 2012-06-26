@@ -5,7 +5,7 @@ package br.com.caelum.stella.validation.ie
 	
 	import mx.validators.ValidationResult;
 
-	public class IERioGrandeDoSulValidator extends IEAbstractValidator {
+	public class IERioGrandeDoSulValidator extends AbstractIEValidator {
 		
 		private static const MOD:int = 11;		
 		// TAMANHO = 10;

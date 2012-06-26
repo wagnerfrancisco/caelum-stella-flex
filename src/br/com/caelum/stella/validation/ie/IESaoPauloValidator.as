@@ -4,7 +4,7 @@ package br.com.caelum.stella.validation.ie
 	
 	import mx.events.ValidationResultEvent;
 
-	public class IESaoPauloValidator extends IEAbstractValidator {
+	public class IESaoPauloValidator extends AbstractIEValidator {
 		
 		private var logicOrComposedValidator:LogicOrComposedValidator;
 		

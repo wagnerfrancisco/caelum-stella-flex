@@ -14,7 +14,7 @@ package br.com.caelum.stella.validation.ie
 	 * 
 	 * 
 	 */
-	public class IECearaValidator extends IEAbstractValidator {
+	public class IECearaValidator extends AbstractIEValidator {
 		
 		private static const MOD:int = 11;		
 		private static const DVX_POSITION:int = 5 + 9;		

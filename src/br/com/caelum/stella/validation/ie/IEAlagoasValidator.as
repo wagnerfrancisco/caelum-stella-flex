@@ -3,7 +3,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
-	public class IEAlagoasValidator extends IEAbstractValidator {		
+	public class IEAlagoasValidator extends AbstractIEValidator {		
 		
 		private static const MOD:int = 11;
 		

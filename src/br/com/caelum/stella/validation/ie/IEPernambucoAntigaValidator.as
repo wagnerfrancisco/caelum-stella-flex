@@ -3,7 +3,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
-	public class IEPernambucoAntigaValidator extends IEAbstractValidator {
+	public class IEPernambucoAntigaValidator extends AbstractIEValidator {
 		
 		// Exemplo 18.1.001.0000004-9
 		

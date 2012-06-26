@@ -15,7 +15,7 @@ package br.com.caelum.stella.validation.ie
 	 * @author Leonardo Bessa
 	 * 
 	 */
-	public class IEParaibaValidator extends IEAbstractValidator {
+	public class IEParaibaValidator extends AbstractIEValidator {
 		
 		private static const MOD:int = 11;
 		

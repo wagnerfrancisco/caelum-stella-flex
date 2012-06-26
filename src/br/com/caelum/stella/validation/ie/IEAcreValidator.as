@@ -3,7 +3,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 	
-	public class IEAcreValidator extends IEAbstractValidator {
+	public class IEAcreValidator extends AbstractIEValidator {
 		
 		public static const FORMATTED:RegExp = /^(01)[.](\d{3})[.](\d{3})[\/](\d{3})[-](\d{2})$/;
 		public static const UNFORMATTED:RegExp = /^(01)(\d{3})(\d{3})(\d{3})(\d{2})$/;
