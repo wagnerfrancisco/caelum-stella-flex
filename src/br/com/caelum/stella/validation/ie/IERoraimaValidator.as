@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -19,8 +20,8 @@ package br.com.caelum.stella.validation.ie
 		
 		private const validadorDeDV:ValidadorDeDV = new ValidadorDeDV(DVX_INFO);
 		
-		public function IERoraimaValidator(isFormatted:Boolean) {
-			super(isFormatted);
+		public function IERoraimaValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
 		override protected function getUnformattedPattern():RegExp {

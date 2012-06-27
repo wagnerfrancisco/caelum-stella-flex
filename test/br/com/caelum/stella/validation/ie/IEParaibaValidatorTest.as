@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.StellaValidator;
 
 	public class IEParaibaValidatorTest extends IEValidatorTest {
@@ -72,8 +73,8 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitUnformattedString, validUnformattedString, validFormattedString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEParaibaValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEParaibaValidator(isFormatted, messageProducer);
 		}
 	}
 }

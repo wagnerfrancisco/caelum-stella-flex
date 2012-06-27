@@ -1,11 +1,14 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	import mx.events.ValidationResultEvent;
 	import mx.validators.ValidationResult;
 	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.fail;
 
 	public class IEMatoGrossoValidatorTest extends IEValidatorTest {
 		
@@ -53,8 +56,8 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitString, validUnformattedString, validFormattedString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEMatoGrossoValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEMatoGrossoValidator(isFormatted,  messageProducer);
 		}
 		
 		[Test]
@@ -63,14 +66,17 @@ package br.com.caelum.stella.validation.ie
 		// Este validador permite de 8 a 10 caracteres, por isso este metodo
 		// precisou ser sobrescrito
 		override public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var value:String = validUnformattedString + '578';			
-			var resultEvent:ValidationResultEvent = validator.validate(value);
+			try {
+				var value:String = validUnformattedString + '578';
+				validator.assertValid(value);
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
 

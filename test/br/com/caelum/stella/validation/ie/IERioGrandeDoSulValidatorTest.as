@@ -1,12 +1,11 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.assertTrue;
+	import org.flexunit.asserts.fail;
 
 	public class IERioGrandeDoSulValidatorTest extends IEValidatorTest {
 		
@@ -21,32 +20,35 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidMunicipalityWithZeros():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			// VALID IE = 224/3658792
-			var value1:String = '0003658791';			
-			var resultEvent:ValidationResultEvent = validator.validate(value1);
-			var errors:Array = errorResults(resultEvent);
-			
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_MUNICIPALITY, ValidationResult(errors[0]).errorCode);
-						
+			var value1:String = '0003658791';
+			try {
+				validator.assertValid(value1);
+				fail();
+			} catch (e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
+									
 			var value2:String = '0003658792';
-			resultEvent = validator.validate(value2);
-			errors = errorResults(resultEvent);
+			try {
+				validator.assertValid(value2);
+				fail();
+			} catch (e:InvalidStateException) {
+				assertEquals(2, e.invalidMessages.length);
+			}
 			
-			assertEquals(2, errors.length);
-			
-			var errorCodes:Array = [];
+			/*var errorCodes:Array = [];
 			for each (var e:ValidationResult in errors) {
 				errorCodes.push(e.errorCode);
 			}
 			
-			assertTrue(errorCodes.indexOf(IEErrors.INVALID_MUNICIPALITY) != -1);
+			assertTrue(errorCodes.indexOf(IEErrors.INVALID_MUNICIPALITY) != -1);*/
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IERioGrandeDoSulValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IERioGrandeDoSulValidator(isFormatted, messageProducer);
 		}
 
 	}

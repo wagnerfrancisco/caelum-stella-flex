@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -47,8 +48,8 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^(\d{6})[-](\d{2})$/;
 		public static const UNFORMATTED:RegExp = /^(\d{6})(\d{2})$/;
 		
-		public function IEBahiaValidator(isFormatted:Boolean) {
-			super(isFormatted);
+		public function IEBahiaValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
 		override protected function getUnformattedPattern():RegExp {

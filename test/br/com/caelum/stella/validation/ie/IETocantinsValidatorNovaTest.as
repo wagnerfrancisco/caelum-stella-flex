@@ -1,11 +1,11 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.fail;
 
 	public class IETocantinsValidatorNovaTest extends IEValidatorTest {
 		
@@ -18,8 +18,8 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitUnformattedString, validUnformattedString, validFormattedString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IETocantinsValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IETocantinsValidator(isFormatted, messageProducer);
 		}
 		
 		override public function shouldNotValidateIEWithLessDigitsThanAllowed():void {
@@ -29,14 +29,16 @@ package br.com.caelum.stella.validation.ie
 		}
 		
 		override public function shouldNotValidateIEWithInvalidCharacter():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var result:ValidationResultEvent = validator.validate(validUnformattedString.replace(/./, '&'));
-			assertEquals(ValidationResultEvent.INVALID, result.type);
+			try {
+				validator.assertValid(validUnformattedString.replace(/./, '&'));
+				fail();
+			} catch (e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(result);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);*/
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -33,8 +34,8 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^([2][4])[.](\d{3})[.](\d{3})[-](\d{1})$/;		
 		public static const UNFORMATTED:RegExp = /^([2][4])(\d{3})(\d{3})(\d{1})$/;
 		
-		public function IEAlagoasValidator(isFormatted:Boolean = true) {
-			super(isFormatted);
+		public function IEAlagoasValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
 		override protected function getUnformattedPattern():RegExp {

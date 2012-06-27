@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -33,9 +34,9 @@ package br.com.caelum.stella.validation.ie
 		
 		private static const REPLACEMENT:String = MISSING_ZEROS + '$1$2$3$4';
 		
-		public function IEMinasGeraisValidator(isFormatted:Boolean) {
-			super(isFormatted);
-		}
+		public function IEMinasGeraisValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
+		}	
 			
 		override protected function getUnformattedPattern():RegExp {
 			return UNFORMATTED;

@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	public class IEAmazonasValidatorTest extends IEValidatorTest {
@@ -15,8 +16,8 @@ package br.com.caelum.stella.validation.ie
 				validString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEAmazonasValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEAmazonasValidator(isFormatted, messageProducer);
 		}
 	}
 }

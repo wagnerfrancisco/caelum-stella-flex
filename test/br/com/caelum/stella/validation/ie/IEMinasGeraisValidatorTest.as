@@ -1,11 +1,11 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.fail;
 
 	public class IEMinasGeraisValidatorTest extends IEValidatorTest {
 		
@@ -22,16 +22,20 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithSecondCheckDigitWrong():void {
-			var validator:StellaValidator = getValidator(false);
-			var resultEvent:ValidationResultEvent = validator.validate(wrongFirstCheckDigitUnformattedString);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);
+			try {
+				validator.assertValid(wrongFirstCheckDigitUnformattedString);
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
+			
+			/*assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEMinasGeraisValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEMinasGeraisValidator(isFormatted, messageProducer);
 		}
 	}
 }

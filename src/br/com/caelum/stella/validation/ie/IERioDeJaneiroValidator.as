@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -19,9 +20,9 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^([1789]\d{1})[.](\d{3})[.](\d{3})$/;		
 		public static const UNFORMATTED:RegExp = /^([1789]\d{1})(\d{3})(\d{3})$/;
 		
-		public function IERioDeJaneiroValidator(isFormatted:Boolean) {
-			super(isFormatted);
-		}		
+		public function IERioDeJaneiroValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
+		}
 		
 		override protected function getUnformattedPattern():RegExp {
 			return UNFORMATTED;

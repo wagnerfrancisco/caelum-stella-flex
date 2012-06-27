@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.StellaValidator;
 
 	public class IERondoniaValidatorCasoDoisTest extends IEValidatorTest {
@@ -21,8 +22,8 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitUnformatted, validUnformattedString, validFormattedString, validValues);
 		}		
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IERondoniaCasoDoisValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IERondoniaCasoDoisValidator(isFormatted, messageProducer);
 		}
 	}	
 }

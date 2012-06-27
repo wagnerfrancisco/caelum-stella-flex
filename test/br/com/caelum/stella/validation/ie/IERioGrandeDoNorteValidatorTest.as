@@ -1,5 +1,7 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	import mx.events.ValidationResultEvent;
@@ -26,20 +28,22 @@ package br.com.caelum.stella.validation.ie
 				validFormattedStringWithTenDigits, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IERioGrandeDoNorteValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IERioGrandeDoNorteValidator(isFormatted, messageProducer);
 		}
 		
 		[Test]
 		override public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			var value:String = validUnformattedStringWithTenDigits + "5";
 			
-			var resultEvent:ValidationResultEvent = validator.validate(value);
+			try {
+				validator.assertValid(value);
+			} catch (e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 	}
 }

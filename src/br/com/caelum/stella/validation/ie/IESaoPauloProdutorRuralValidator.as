@@ -1,13 +1,15 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.ValidationMessage;
+	import br.com.caelum.stella.validation.BaseValidator;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.StellaValidator;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 	
 	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
 
-	public class IESaoPauloProdutorRuralValidator extends Validator implements StellaValidator {
+	public class IESaoPauloProdutorRuralValidator implements StellaValidator {
 		
 		private static const MOD:int = 11;
 		
@@ -29,42 +31,43 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^P-(\d{8})[.](\d{1})[\/](\d{3})$/;		
 		public static const UNFORMATTED:RegExp = /^P(\d{8})(\d{1})(\d{3})$/;
 		
-		public function IESaoPauloProdutorRuralValidator(isFormatted:Boolean) {
-			super();
+		private var _baseValidator:BaseValidator;
+		
+		public function IESaoPauloProdutorRuralValidator(isFormatted:Boolean, messageProducer:MessageProducer) {
+			_baseValidator = new BaseValidator(messageProducer);
 			this.isFormatted = isFormatted;
-			this.required = false;
 		}
 		
-		private function getInvalidValues(ie:String):Array {
-			var errors:Array = [];
+		protected function getInvalidValues(ie:String):Vector.<String> {
+			var errors:Vector.<String> = new Vector.<String>();
 			if (ie != null) {
 				var unformattedIE:String = checkForCorrectFormat(ie, errors);
 				if (errors.length === 0) {
 					if (!hasValidCheckDigits(unformattedIE)) {
-						errors.push(new ValidationResult(true, null, IEErrors.INVALID_CHECK_DIGITS, 'invalid_check_digits'));
+						errors.push(IEErrors.INVALID_CHECK_DIGITS);
 					}
 				}
 			}
 			return errors;
 		}
 		
-		private function checkForCorrectFormat(ie:String, errors:Array):String {
+		private function checkForCorrectFormat(ie:String, errors:Vector.<String>):String {
 			var unformattedIE:String;
 			
 			if (isFormatted) {
 				if (!FORMATTED.test(ie)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_FORMAT, 'invalid_format'));
+					errors.push(IEErrors.INVALID_FORMAT);
 				}
 				unformattedIE = ie.replace(/\D/g, '');
 			} else {
 				if (!UNFORMATTED.test(ie)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_DIGITS, 'invalid_digits'));
+					errors.push(IEErrors.INVALID_DIGITS);
 				}
 				unformattedIE = ie.replace(/\D/g, '');
 			}
 			return unformattedIE;
 		}
-		
+
 		private function hasValidCheckDigits(value:String):Boolean {
 			var testedValue:String = MISSING_LEFT_SIDE_ZEROS + value;
 			return (DVX_CHECKER.isDVValid(testedValue));
@@ -80,18 +83,12 @@ package br.com.caelum.stella.validation.ie
 			return result;
 		}
 		
-		override protected function doValidation(value:Object):Array {
-			var results:Array = super.doValidation(value);
-			
-			if (results.length > 0) {
-				return results;
-			}
-			
-			if (value != null) {
-				results = getInvalidValues(value.toString());
-			}
-			
-			return results;
+		public function assertValid(value:Object):void {
+			_baseValidator.assertValid(getInvalidValues(value as String)); //TODO esquema do tipo
+		}
+		
+		public function invalidMessagesFor(value:Object):Vector.<ValidationMessage> {
+			return _baseValidator.generateValidationMessages(getInvalidValues(value as String)); //TODO esquema do tipo
 		}
 	}
 }

@@ -1,130 +1,68 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.ValidationMessage;
+	import br.com.caelum.stella.validation.BaseValidator;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import flash.events.Event;
-	
-	import mx.validators.ValidationResult;
-	import mx.validators.Validator;
+	import flash.events.EventDispatcher;
 
-	public class AbstractIEValidator extends Validator implements StellaValidator {
+	public class AbstractIEValidator extends EventDispatcher implements StellaValidator {
 		
 		private var _isFormatted:Boolean;
+		private var _baseValidator:BaseValidator;
 		
-		private var _invalidCheckDigitsErrorMessage:String = 'Dígitos verificadores inválidos';
-		private var _invalidDigitsErrorMessage:String = 'Dígitos inválidos';
-		private var _invalidFormatErrorMessage:String = 'Formato inválido';
-		private var _invalidMunicipalityErrorMessage:String = 'Municipalidade inválida';
-		private var _undefinedStateErrorMessage:String = 'Estado indefinido';
-		
-		public function AbstractIEValidator(isFormatted:Boolean) {
-			super();
+		public function AbstractIEValidator(isFormatted:Boolean, messageProducer:MessageProducer) {
 			this._isFormatted = isFormatted;
-			this.required = false;
+			_baseValidator = new BaseValidator(messageProducer);
 		}
 		
-		override protected function doValidation(value:Object):Array {
-			var results:Array = super.doValidation(value);
-			
-			if (results.length > 0) {
-				return results;
-			}
-			
-			if (value != null) {
-				results = getInvalidValues(value.toString());
-			}
-			
-			return results;
-		}
-		
-		protected function getInvalidValues(ie:String):Array {
-			var errors:Array = [];
-			var unformattedIE:String = checkForCorrectFormat(ie, errors);
-			if (errors.length === 0) {
-				if (!hasValidCheckDigits(unformattedIE)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_CHECK_DIGITS, 'invalid_check_digits'));
+		protected function getInvalidValues(ie:String):Vector.<String> {
+			var errors:Vector.<String> = new Vector.<String>();
+			if (ie != null) {
+				var unformattedIE:String = checkForCorrectFormat(ie, errors);
+				if (errors.length === 0) {
+					if (!hasValidCheckDigits(unformattedIE)) {
+						errors.push(IEErrors.INVALID_CHECK_DIGITS);
+					}
 				}
 			}
 			return errors;
 		}
 		
-		protected function checkForCorrectFormat(ie:String, errors:Array):String {
+		protected function checkForCorrectFormat(ie:String, errors:Vector.<String>):String {
 			var unformattedIE:String;
 			var pattern:RegExp;
 			
-			if (isFormatted) {
+			if (_isFormatted) {
 				pattern = getFormattedPattern();
 				if (!pattern.test(ie)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_FORMAT, 'invalid_format'));
+					errors.push(IEErrors.INVALID_FORMAT);
 				}
 				unformattedIE = ie.replace(/\D/g, '');
 			} else {
 				pattern = getUnformattedPattern();
 				if (!pattern.test(ie)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_DIGITS, 'invalid_digits'));
+					errors.push(IEErrors.INVALID_DIGITS);
 				}
 				unformattedIE = ie;
 			}
 			return unformattedIE;
 		}
 		
-		protected function getFormattedPattern():RegExp {
-			throw new Error('override IEAbstractValidator.getFormattedPattern');
+		public function invalidMessagesFor(ie:Object):Vector.<ValidationMessage> {
+			return _baseValidator.generateValidationMessages(getInvalidValues(ie as String)); //TODO esquema do tipo
 		}
 		
-		protected function getUnformattedPattern():RegExp {
-			throw new Error('override IEAbstractValidator.getUnformattedPattern');
+		public function assertValid(object:Object):void {
+			return _baseValidator.assertValid(getInvalidValues(object as String)); //TODO esquema do tipo
 		}
 		
-		protected function hasValidCheckDigits(value:String):Boolean {
-			throw new Error('override IEAbstractValidator.hasValidCheckDigits');
-		}
-
-		[Bindable(event='isFormattedChange')]
-		public function get isFormatted():Boolean { return _isFormatted; }
-
-		public function set isFormatted(value:Boolean):void {
-			if (_isFormatted !== value ) {
-				_isFormatted = value;
-				dispatchEvent(new Event('isFormattedChange'));
-			}
-		}
-
-		public function get invalidCheckDigitsErrorMessage():String { return _invalidCheckDigitsErrorMessage; }
-
-		public function set invalidCheckDigitsErrorMessage(value:String):void {
-			_invalidCheckDigitsErrorMessage = value;
-		}
-
-		public function get invalidDigitsErrorMessage():String { return _invalidDigitsErrorMessage; }
-
-		public function set invalidDigitsErrorMessage(value:String):void {
-			_invalidDigitsErrorMessage = value;
-		}
-
-		public function get invalidFormatErrorMessage():String { return _invalidFormatErrorMessage; }
-
-		public function set invalidFormatErrorMessage(value:String):void {
-			_invalidFormatErrorMessage = value;
-		}
-
-		public function get invalidMunicipalityErrorMessage():String { return _invalidMunicipalityErrorMessage; }
-
-		public function set invalidMunicipalityErrorMessage(value:String):void {
-			_invalidMunicipalityErrorMessage = value;
-		}
-
-		public function get undefinedStateErrorMessage():String { return _undefinedStateErrorMessage; }
-
-		public function set undefinedStateErrorMessage(value:String):void {
-			_undefinedStateErrorMessage = value;
-		}
-
 		public function isEligible(value:Object):Boolean {
 			var result:Boolean;
 			var pattern:RegExp;
 			
-			if (isFormatted) {
+			if (_isFormatted) {
 				pattern = getFormattedPattern();
 				result = pattern.test(String(value));
 			} else {
@@ -133,6 +71,18 @@ package br.com.caelum.stella.validation.ie
 			}
 			
 			return result;
+		}
+		
+		protected function hasValidCheckDigits(value:String):Boolean {
+			throw new Error('override IEAbstractValidator.hasValidCheckDigits');
+		}
+		
+		protected function getFormattedPattern():RegExp {
+			throw new Error('override IEAbstractValidator.getFormattedPattern');
+		}
+		
+		protected function getUnformattedPattern():RegExp {
+			throw new Error('override IEAbstractValidator.getUnformattedPattern');
 		}
 	}
 }

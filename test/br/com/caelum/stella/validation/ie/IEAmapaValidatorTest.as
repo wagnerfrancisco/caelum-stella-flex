@@ -1,4 +1,5 @@
 package br.com.caelum.stella.validation.ie {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	public class IEAmapaValidatorTest extends IEValidatorTest {
@@ -12,8 +13,8 @@ package br.com.caelum.stella.validation.ie {
 			super(wrongCheckDigitUnformattedString, validUnformattedString, validFormattedString, validValues);
 		}		
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEAmapaValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEAmapaValidator(isFormatted, messageProducer);
 		}
 	}
 }

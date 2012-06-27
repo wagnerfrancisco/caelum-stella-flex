@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 	
@@ -23,8 +24,8 @@ package br.com.caelum.stella.validation.ie
 			0, rotinas, MOD, DVY_MULTIPLIERS, DVY_POSITION);		
 		private static const DVY_CHECKER:ValidadorDeDV = new ValidadorDeDV(DVY_INFO);
 		
-		public function IEAcreValidator(isFormatted:Boolean = true) {
-			super(isFormatted);
+		public function IEAcreValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
 		override protected function getFormattedPattern():RegExp {

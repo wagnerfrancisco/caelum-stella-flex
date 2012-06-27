@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	/*
@@ -28,13 +29,8 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitUnformattedNewString, validUnformattedNewString, validFormattedNewString, validValues);
 		}
 		
-		[Test]
-		public function test():void {
-			
-		}
-		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IEAcreValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IEAcreValidator(isFormatted, messageProducer);
 		}
 	}
 }

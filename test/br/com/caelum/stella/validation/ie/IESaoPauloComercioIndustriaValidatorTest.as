@@ -1,5 +1,7 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	import mx.events.ValidationResultEvent;
@@ -23,20 +25,22 @@ package br.com.caelum.stella.validation.ie
 			super(wrongCheckDigitString, validUnformattedString, validString, validValues);
 		}
 		
-		override protected function getValidator(isFormatted:Boolean):StellaValidator {
-			return new IESaoPauloComercioIndustriaValidator(isFormatted);
+		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
+			return new IESaoPauloComercioIndustriaValidator(isFormatted, messageProducer);
 		}
 		
 		[Test]
 		public function shouldNotValidateIEsWithSecondCheckDigitWrong():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var result:ValidationResultEvent = validator.validate(wrongSecondCheckDigitString);
-			assertEquals(ValidationResultEvent.INVALID, result.type);
+			try {
+				validator.assertValid(wrongSecondCheckDigitString);
+				fail();
+			} catch (e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(result);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 	}
 }

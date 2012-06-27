@@ -1,14 +1,18 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.MessageProducerMock;
+	import br.com.caelum.stella.ValidationMessage;
+	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertStrictlyEquals;
+	import org.flexunit.asserts.fail;
 
 	public class IEValidatorTest {
 		
+		protected const _messageProducer:MessageProducer = new MessageProducerMock();
 		private var _wrongCheckDigitUnformattedIE:String;
 		private var _validUnformattedIE:String;
 		private var _validFormattedIE:String;
@@ -26,76 +30,97 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidCharacter():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var resultEvent:ValidationResultEvent = validator.validate(_validUnformattedIE.replace(/./, '&'));
-			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
+			try {
+				validator.assertValid(_validUnformattedIE.replace(/./, '&'));
+				fail();
+			} catch (e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
 		[Test]
 		public function shouldNotValidateIEWithLessDigitsThanAllowed():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var resultEvent:ValidationResultEvent = validator.validate(_validUnformattedIE.replace(/./, ''));
-			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
+			try {
+				validator.assertValid(_validUnformattedIE.replace(/./, ''));
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
 		// IEMatoGrosso e IERioGrandeDoNorte sobreescrevem
 		[Test]
 		public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var value:String = _validUnformattedIE + '5';
-			var resultEvent:ValidationResultEvent = validator.validate(value);			
-			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
+			try {
+				var value:String = _validUnformattedIE + '5';
+				validator.assertValid(value);
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
 			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);
+			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
 		[Test]
 		public function shouldNotValidateIEsWithWrongCheckDigit():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
-			var resultEvent:ValidationResultEvent = validator.validate(_wrongCheckDigitUnformattedIE);
-			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
-
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);
+			try {
+				validator.assertValid(_wrongCheckDigitUnformattedIE);
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
+			}
+			
+			/*assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);*/
 		}
 		
 		[Test]
 		public function shouldValidateValidIE():void {
-			var validator:StellaValidator = getValidator(true);
-			var resultEvent:ValidationResultEvent;
+			var validator:StellaValidator = getValidator(_messageProducer, true);
 			
 			for each (var validValue:String in _validFormattedValues) {
-				resultEvent = validator.validate(validValue);
-				assertEquals(ValidationResultEvent.VALID, resultEvent.type);
+				try {
+					validator.assertValid(validValue);
+				} catch(e:InvalidStateException) {
+					fail("IE Invalida: " + validValue);
+				}
+
+				var errors:Vector.<ValidationMessage> = validator.invalidMessagesFor(validValue);
+				assertStrictlyEquals(0, errors.length);
 			}
 		}
 		
 		[Test]
 		public function shouldValidateNullIE():void {
-			var validator:StellaValidator = getValidator(false);
+			var validator:StellaValidator = getValidator(_messageProducer, false);
+			var errors:Vector.<ValidationMessage>;
 			
-			var resultEvent:ValidationResultEvent = validator.validate(null);
-			assertEquals(ValidationResultEvent.VALID, resultEvent.type);
+			try {
+				validator.assertValid(null);
+			} catch(e:InvalidStateException) {
+				fail();
+			}
+			/*errors = validator.invalidMessagesFor(value);
+			assertTrue(errors.isEmpty());
+			
+			verify(messageProducer, never()).getMessage(any(IEError.class));*/
 		}
 		
 		[Test]
 		public function shouldNotValidateValidUnformattedIE():void {
-			var validator:StellaValidator = getValidator(true);
+			var validator:StellaValidator = getValidator(_messageProducer, true);
 			
 			var value:String = _validFormattedIE.replace('-', ':');
 			if (value === _validFormattedIE) {
@@ -105,25 +130,17 @@ package br.com.caelum.stella.validation.ie
 				}
 			}
 			
-			var resultEvent:ValidationResultEvent = validator.validate(value);
-			assertEquals(ValidationResultEvent.INVALID, resultEvent.type);
-			
-			var errors:Array = errorResults(resultEvent);
-			assertEquals(1, errors.length);
-			assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);
-		}
-		
-		protected function errorResults(event:ValidationResultEvent):Array {
-			var errors:Array = [];
-			for each (var validationResult:ValidationResult in event.results) {
-				if (validationResult.isError) {
-					errors.push(validationResult);
-				}
+			try {
+				validator.assertValid(value);
+				fail();
+			} catch(e:InvalidStateException) {
+				assertEquals(1, e.invalidMessages.length);
 			}
-			return errors;
+			
+			/*assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);*/
 		}
 		
-		protected function getValidator(isFormatted:Boolean):StellaValidator {
+		protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
 			throw new Error('override IEValidatorTest.getValidator');
 		}
 	}

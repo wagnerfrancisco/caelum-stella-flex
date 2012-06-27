@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 	
@@ -20,19 +21,21 @@ package br.com.caelum.stella.validation.ie
 		public static const FORMATTED:RegExp = /^([0-4]\d{2})[\/](\d{6})(\d{1})$/;		
 		public static const UNFORMATTED:RegExp = /^([0-4]\d{2})(\d{6})(\d{1})$/;
 		
-		public function IERioGrandeDoSulValidator(isFormatted:Boolean = true) {
-			super(isFormatted);		
+		public function IERioGrandeDoSulValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
-		override protected function getInvalidValues(ie:String):Array {
-			var errors:Array = [];
-			var unformattedIE:String = checkForCorrectFormat(ie, errors);
-			if (errors.length === 0) {
-				if (!hasValidCheckDigits(unformattedIE)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_CHECK_DIGITS, 'invalid_check_digits'));
-				}
-				if (!hasValidMunicipality(unformattedIE)) {
-					errors.push(new ValidationResult(true, null, IEErrors.INVALID_MUNICIPALITY, 'invalid_municipality'));
+		override protected function getInvalidValues(ie:String):Vector.<String> {
+			var errors:Vector.<String> = new Vector.<String>();
+			if (ie != null) {
+				var unformattedIE:String = checkForCorrectFormat(ie, errors);
+				if (errors.length === 0) {
+					if (!hasValidCheckDigits(unformattedIE)) {
+						errors.push(new ValidationResult(true, null, IEErrors.INVALID_CHECK_DIGITS, 'invalid_check_digits'));
+					}
+					if (!hasValidMunicipality(unformattedIE)) {
+						errors.push(new ValidationResult(true, null, IEErrors.INVALID_MUNICIPALITY, 'invalid_municipality'));
+					}
 				}
 			}
 			return errors;

@@ -1,5 +1,6 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
 
@@ -23,8 +24,8 @@ package br.com.caelum.stella.validation.ie
 		
 		public static const UNFORMATTED:RegExp = /^([0][08]\d)(\d{3})(\d{2})(\d{1})$/;
 		
-		public function IEEspiritoSantoValidator(isFormatted:Boolean) {
-			super(isFormatted);
+		public function IEEspiritoSantoValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			super(isFormatted, messageProducer);
 		}
 		
 		override protected function getUnformattedPattern():RegExp {
