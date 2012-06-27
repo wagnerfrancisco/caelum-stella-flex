@@ -1,9 +1,6 @@
 package br.com.caelum.stella.validation
 {
 	import br.com.caelum.stella.ValidationMessage;
-	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.IValidator;
 
 	public interface StellaValidator {
 		

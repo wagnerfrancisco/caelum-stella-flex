@@ -4,9 +4,6 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
