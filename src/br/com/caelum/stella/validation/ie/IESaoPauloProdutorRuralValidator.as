@@ -6,8 +6,6 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.StellaValidator;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
-	
-	import mx.validators.ValidationResult;
 
 	public class IESaoPauloProdutorRuralValidator implements StellaValidator {
 		

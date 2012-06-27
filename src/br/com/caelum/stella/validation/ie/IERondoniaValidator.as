@@ -4,9 +4,6 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.ValidationMessage;
 	import br.com.caelum.stella.validation.LogicOrComposedValidator;
 	import br.com.caelum.stella.validation.StellaValidator;
-	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.Validator;
 
 	public class IERondoniaValidator implements StellaValidator {
 		

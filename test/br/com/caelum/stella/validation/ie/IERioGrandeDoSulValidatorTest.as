@@ -5,6 +5,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 
 	public class IERioGrandeDoSulValidatorTest extends IEValidatorTest {
@@ -20,6 +21,9 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidMunicipalityWithZeros():void {
+			_messageProducer.expects('getMessage').withArg(IEErrors.INVALID_MUNICIPALITY).times(2);
+			_messageProducer.expects('getMessage').withArg(IEErrors.INVALID_CHECK_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			// VALID IE = 224/3658792
@@ -39,12 +43,7 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(2, e.invalidMessages.length);
 			}
 			
-			/*var errorCodes:Array = [];
-			for each (var e:ValidationResult in errors) {
-				errorCodes.push(e.errorCode);
-			}
-			
-			assertTrue(errorCodes.indexOf(IEErrors.INVALID_MUNICIPALITY) != -1);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {

@@ -8,6 +8,8 @@ package br.com.caelum.stella.validation.ie
 	import mx.validators.ValidationResult;
 	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertTrue;
+	import org.flexunit.asserts.fail;
 
 	public class IERioGrandeDoNorteValidatorTest extends IEValidatorTest {
 		
@@ -34,16 +36,19 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		override public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			var value:String = validUnformattedStringWithTenDigits + "5";
 			
 			try {
 				validator.assertValid(value);
+				fail();
 			} catch (e:InvalidStateException) {
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 	}
 }

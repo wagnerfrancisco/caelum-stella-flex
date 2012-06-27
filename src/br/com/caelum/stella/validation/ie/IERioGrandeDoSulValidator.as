@@ -3,8 +3,6 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.validation.DigitoVerificadorInfo;
 	import br.com.caelum.stella.validation.ValidadorDeDV;
-	
-	import mx.validators.ValidationResult;
 
 	public class IERioGrandeDoSulValidator extends AbstractIEValidator {
 		
@@ -31,10 +29,10 @@ package br.com.caelum.stella.validation.ie
 				var unformattedIE:String = checkForCorrectFormat(ie, errors);
 				if (errors.length === 0) {
 					if (!hasValidCheckDigits(unformattedIE)) {
-						errors.push(new ValidationResult(true, null, IEErrors.INVALID_CHECK_DIGITS, 'invalid_check_digits'));
+						errors.push(IEErrors.INVALID_CHECK_DIGITS);
 					}
 					if (!hasValidMunicipality(unformattedIE)) {
-						errors.push(new ValidationResult(true, null, IEErrors.INVALID_MUNICIPALITY, 'invalid_municipality'));
+						errors.push(IEErrors.INVALID_MUNICIPALITY);
 					}
 				}
 			}

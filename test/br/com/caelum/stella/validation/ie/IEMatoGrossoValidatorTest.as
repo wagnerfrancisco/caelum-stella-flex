@@ -4,10 +4,8 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
 	
-	import mx.events.ValidationResultEvent;
-	import mx.validators.ValidationResult;
-	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 
 	public class IEMatoGrossoValidatorTest extends IEValidatorTest {
@@ -60,12 +58,11 @@ package br.com.caelum.stella.validation.ie
 			return new IEMatoGrossoValidator(isFormatted,  messageProducer);
 		}
 		
-		[Test]
-		public function t():void {}
-		
 		// Este validador permite de 8 a 10 caracteres, por isso este metodo
 		// precisou ser sobrescrito
 		override public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -76,7 +73,7 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 

@@ -5,6 +5,7 @@ package br.com.caelum.stella.validation.ie
 	import br.com.caelum.stella.validation.StellaValidator;
 	
 	import org.flexunit.asserts.assertEquals;
+	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 
 	public class IEParanaValidatorTest extends IEValidatorTest {		
@@ -22,6 +23,8 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithSecondCheckDigitWrong():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_CHECK_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -31,7 +34,7 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		override protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {

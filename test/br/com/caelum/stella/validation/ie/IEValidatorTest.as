@@ -8,11 +8,12 @@ package br.com.caelum.stella.validation.ie
 	
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.asserts.assertStrictlyEquals;
+	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 
 	public class IEValidatorTest {
 		
-		protected const _messageProducer:MessageProducer = new MessageProducerMock();
+		protected const _messageProducer:MessageProducerMock = new MessageProducerMock();
 		private var _wrongCheckDigitUnformattedIE:String;
 		private var _validUnformattedIE:String;
 		private var _validFormattedIE:String;
@@ -30,6 +31,8 @@ package br.com.caelum.stella.validation.ie
 		
 		[Test]
 		public function shouldNotValidateIEWithInvalidCharacter():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -39,11 +42,13 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		[Test]
 		public function shouldNotValidateIEWithLessDigitsThanAllowed():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -53,12 +58,14 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		// IEMatoGrosso e IERioGrandeDoNorte sobreescrevem
 		[Test]
 		public function shouldNotValidateIEWithMoreDigitsThanAlowed():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -69,11 +76,13 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		[Test]
 		public function shouldNotValidateIEsWithWrongCheckDigit():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_CHECK_DIGITS);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			
 			try {
@@ -83,11 +92,13 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_CHECK_DIGITS, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		[Test]
 		public function shouldValidateValidIE():void {
+			_messageProducer.expects('getMessage').times(0);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, true);
 			
 			for each (var validValue:String in _validFormattedValues) {
@@ -100,10 +111,14 @@ package br.com.caelum.stella.validation.ie
 				var errors:Vector.<ValidationMessage> = validator.invalidMessagesFor(validValue);
 				assertStrictlyEquals(0, errors.length);
 			}
+			
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		[Test]
 		public function shouldValidateNullIE():void {
+			_messageProducer.expects('getMessage').times(0);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, false);
 			var errors:Vector.<ValidationMessage>;
 			
@@ -112,14 +127,14 @@ package br.com.caelum.stella.validation.ie
 			} catch(e:InvalidStateException) {
 				fail();
 			}
-			/*errors = validator.invalidMessagesFor(value);
-			assertTrue(errors.isEmpty());
 			
-			verify(messageProducer, never()).getMessage(any(IEError.class));*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		[Test]
 		public function shouldNotValidateValidUnformattedIE():void {
+			_messageProducer.expects('getMessage').times(1).withArg(IEErrors.INVALID_FORMAT);
+			
 			var validator:StellaValidator = getValidator(_messageProducer, true);
 			
 			var value:String = _validFormattedIE.replace('-', ':');
@@ -137,7 +152,7 @@ package br.com.caelum.stella.validation.ie
 				assertEquals(1, e.invalidMessages.length);
 			}
 			
-			/*assertEquals(IEErrors.INVALID_FORMAT, ValidationResult(errors[0]).errorCode);*/
+			assertTrue(_messageProducer.errorMessage(), _messageProducer.success());
 		}
 		
 		protected function getValidator(messageProducer:MessageProducer, isFormatted:Boolean):StellaValidator {
