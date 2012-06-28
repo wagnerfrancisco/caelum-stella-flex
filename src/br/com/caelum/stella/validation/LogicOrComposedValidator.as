@@ -32,18 +32,14 @@ package br.com.caelum.stella.validation
 						isValid = true;
 						break;
 					} catch (e:InvalidStateException) {
-						trace('never?');
 						lastException = e;
 					}	
 				}					
 			}			
 			if (!isValid) {
-				trace('!isValid');
 				if (lastException != null) {
-					trace('throw lastException');
 					throw lastException;
 				} else {
-					trace('throw new InvalidStateException(_messageProducer.getMessage(IEErrors.INVALID_FORMAT));');
 					throw new InvalidStateException(_messageProducer.getMessage(IEErrors.INVALID_FORMAT));
 				}
 			}

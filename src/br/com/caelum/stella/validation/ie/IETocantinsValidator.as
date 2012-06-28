@@ -1,6 +1,7 @@
 package br.com.caelum.stella.validation.ie
 {
 	import br.com.caelum.stella.MessageProducer;
+	import br.com.caelum.stella.SimpleMessageProducer;
 	import br.com.caelum.stella.ValidationMessage;
 	import br.com.caelum.stella.validation.LogicOrComposedValidator;
 	import br.com.caelum.stella.validation.StellaValidator;
@@ -9,7 +10,9 @@ package br.com.caelum.stella.validation.ie
 		
 		private var  _baseValidator:LogicOrComposedValidator;
 		
-		public function IETocantinsValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {			
+		public function IETocantinsValidator(isFormatted:Boolean = true, messageProducer:MessageProducer = null) {
+			messageProducer = messageProducer || new SimpleMessageProducer();
+			
 			var validatorClasses:Array = [IETocantinsNovaValidator, IETocantinsAntigaValidator];
 			this._baseValidator = new LogicOrComposedValidator(isFormatted, messageProducer, validatorClasses);
 		}
