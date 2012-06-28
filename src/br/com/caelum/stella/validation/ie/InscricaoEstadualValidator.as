@@ -83,6 +83,25 @@ package br.com.caelum.stella.validation.ie
 			
 			return result;
 		}
+		
+		private function updateValidator():void {
+			if (!_uf) {
+				return;
+			}
+			
+			var isFirstInitialization:Boolean = _currentValidator == null;
+			
+			_currentValidator = new validators[_uf](_formatted, _messageProducer);
+			
+			if (isFirstInitialization) {
+				var obj:Object = getValueFromSource();
+				if (obj) {
+					validate(obj);
+				}
+			} else {
+				validate();
+			}
+		}
 
 		[Bindable(event='ufChange')]
 		public function get uf():String { return _uf; }
@@ -95,11 +114,8 @@ package br.com.caelum.stella.validation.ie
 					throw new Error('Nao ha validador para a UF informada');
 				}
 				
-				var validator:StellaValidator = new validators[value](_formatted, _messageProducer);
-				
-				_uf = value;
-				_currentValidator = validator;
-				
+				_uf = value;			
+				updateValidator();
 				dispatchEvent(new Event('ufChange'));
 			}
 		}
@@ -109,8 +125,8 @@ package br.com.caelum.stella.validation.ie
 
 		public function set formatted(value:Boolean):void {
 			if (value !== _formatted) {
-				_formatted = value;
-				
+				_formatted = value;				
+				updateValidator();
 				dispatchEvent(new Event('formattedChange'));
 			}
 		}
