@@ -1,5 +1,7 @@
 package br.com.caelum.stella.validation.ie
 {
+	import br.com.caelum.stella.MapMessageProducer;
+	import br.com.caelum.stella.MessageProducer;
 	import br.com.caelum.stella.ValidationMessage;
 	import br.com.caelum.stella.exceptions.InvalidStateException;
 	import br.com.caelum.stella.validation.StellaValidator;
@@ -15,6 +17,7 @@ package br.com.caelum.stella.validation.ie
 		private var _formatted:Boolean = true;
 		private var _uf:String;
 		private var _currentValidator:StellaValidator;
+		private var _messageProducer:MapMessageProducer;
 		
 		private static const validators:Object = {
 			'AC': IEAcreValidator,
@@ -48,6 +51,13 @@ package br.com.caelum.stella.validation.ie
 		
 		public function InscricaoEstadualValidator() {
 			super();
+			
+			_messageProducer = new MapMessageProducer();
+			_messageProducer.registerErrorMessage(IEErrors.INVALID_CHECK_DIGITS, 'Inscrição estadual inválida');
+			_messageProducer.registerErrorMessage(IEErrors.INVALID_DIGITS, 'Inscrição estadual inválida');
+			_messageProducer.registerErrorMessage(IEErrors.INVALID_FORMAT, 'Inscrição estadual inválida');
+			_messageProducer.registerErrorMessage(IEErrors.INVALID_MUNICIPALITY, 'Inscrição estadual inválida');
+			_messageProducer.registerErrorMessage(IEErrors.UNDEFINED_STATE, 'Inscrição estadual inválida');
 		}
 		
 		override protected function doValidation(value:Object):Array {
@@ -85,7 +95,7 @@ package br.com.caelum.stella.validation.ie
 					throw new Error('Nao ha validador para a UF informada');
 				}
 				
-				var validator:StellaValidator = new validators[value](_formatted);
+				var validator:StellaValidator = new validators[value](_formatted, _messageProducer);
 				
 				_uf = value;
 				_currentValidator = validator;
