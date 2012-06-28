@@ -110,8 +110,12 @@ package br.com.caelum.stella.validation.ie
 			value = value.toUpperCase();
 			
 			if (value !== _uf) {
-				if (validators[value] == null) {
-					throw new Error('Nao ha validador para a UF informada');
+				
+				if (value == null || validators[value] == null) {
+					_uf = null;
+					_currentValidator = null;
+					dispatchEvent(new Event('ufChange'));
+					return;
 				}
 				
 				_uf = value;			
